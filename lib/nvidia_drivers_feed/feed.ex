@@ -42,13 +42,23 @@ defmodule NvidiaDriversFeed.Feed do
     else
       _ -> []
     end
+    rss_date = with {:ok, parsed_date} <- Timex.parse(date, "{Mfull} {0D}, {YYYY}"),
+         with_timezone <- Timex.to_datetime(parsed_date, "UTC"),
+         {:ok, formatted_date} <- Timex.format(with_timezone, "{RFC822}")
+    do
+      formatted_date
+    else
+      err ->
+        IO.puts("error: #{inspect err}")
+        date
+    end
     categories = tags |> Enum.map(fn %{"tagTitle" => tag_title} -> {:category, nil, tag_title} end)
     {:item, nil, [
       {:title, nil, title},
       {:link, nil, url},
       {:description, nil, description},
       {:author, nil, author},
-      {:pubData, nil, date},
+      {:pubData, nil, rss_date},
       image
     ] ++ categories }
   end
