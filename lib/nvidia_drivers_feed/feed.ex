@@ -58,7 +58,7 @@ defmodule NvidiaDriversFeed.Feed do
       {:link, nil, url},
       {:description, nil, description},
       {:author, nil, author},
-      {:pubData, nil, rss_date},
+      {:pubDate, nil, rss_date},
       image
     ] ++ categories }
   end
