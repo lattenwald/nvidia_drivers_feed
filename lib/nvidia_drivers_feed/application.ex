@@ -7,7 +7,7 @@ defmodule NvidiaDriversFeed.Application do
 
   @impl true
   def start(_type, _args) do
-    port = Application.get_env(:musiclink, :port, 4091)
+    port = Application.get_env(:nvidia_drivers_feed, :port, 4091)
 
     children = [
       Plug.Cowboy.child_spec(scheme: :http, plug: NvidiaDriversFeed.Router, options: [port: port])
